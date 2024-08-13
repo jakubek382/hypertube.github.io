@@ -1,0 +1,6 @@
+table, th, td {
+    border: 1px solid black;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}

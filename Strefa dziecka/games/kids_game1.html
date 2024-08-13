@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra Przygodowa - Strefa Dziecka</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #e0f7fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #00796b;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            background: #00796b;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .button:hover {
+            background: #004d40;
+            transform: scale(1.05);
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .choices {
+            margin: 20px 0;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Gra Przygodowa</h1>
+        <div id="game">
+            <div class="message" id="message">Witaj w grze przygodowej! Kliknij "Rozpocznij", aby rozpocząć.</div>
+            <button class="button" id="startButton">Rozpocznij</button>
+            <div class="image-container" id="imageContainer"></div>
+            <div class="choices" id="choices"></div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 HyperTech. Wszystkie prawa zastrzeżone.
+    </footer>
+
+    <script>
+        const messageElement = document.getElementById('message');
+        const startButton = document.getElementById('startButton');
+        const imageContainer = document.getElementById('imageContainer');
+        const choicesContainer = document.getElementById('choices');
+
+        const images = {
+            start: 'https://via.placeholder.com/600x300?text=Start',
+            forest: 'https://via.placeholder.com/600x300?text=Las',
+            castle: 'https://via.placeholder.com/600x300?text=Zamek',
+            dragon: 'https://via.placeholder.com/600x300?text=Smok',
+            treasure: 'https://via.placeholder.com/600x300?text=Skarb',
+            restart: 'https://via.placeholder.com/600x300?text=Restart'
+        };
+
+        startButton.addEventListener('click', startGame);
+
+        function startGame() {
+            messageElement.innerHTML = 'Jesteś w zaczarowanym lesie. Wybierz jedną z dróg: jedna prowadzi do zamku, druga do ciemnego lasu.';
+            imageContainer.innerHTML = `<img src="${images.start}" alt="Start">`;
+            choicesContainer.innerHTML = `
+                <div class="choice"><button class="button" onclick="choosePath('castle')">Idź do zamku</button></div>
+                <div class="choice"><button class="button" onclick="choosePath('forest')">Idź do ciemnego lasu</button></div>
+            `;
+            startButton.style.display = 'none';
+        }
+
+        function choosePath(path) {
+            if (path === 'castle') {
+                messageElement.innerHTML = 'Dotarłeś do zamku, gdzie czeka na Ciebie smok!';
+                imageContainer.innerHTML = `<img src="${images.dragon}" alt="Smok">`;
+                choicesContainer.innerHTML = `<button class="button" onclick="restartGame()">Zagraj ponownie</button>`;
+            } else if (path === 'forest') {
+                messageElement.innerHTML = 'Odkryłeś ukryty skarb w ciemnym lesie!';
+                imageContainer.innerHTML = `<img src="${images.treasure}" alt="Skarb">`;
+                choicesContainer.innerHTML = `<button class="button" onclick="restartGame()">Zagraj ponownie</button>`;
+            }
+        }
+
+        function restartGame() {
+            messageElement.innerHTML = 'Witaj w grze przygodowej! Kliknij "Rozpocznij", aby rozpocząć.';
+            imageContainer.innerHTML = `<img src="${images.start}" alt="Start">`;
+            choicesContainer.innerHTML = '';
+            startButton.style.display = 'inline-block';
+        }
+    </script>
+</body>
+</html>

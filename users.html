@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Użytkownicy sieci - Hyper TV</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #0f0f0f; /* Dark grey background */
+            color: #e0e0e0; /* Light grey text */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #1a1a1a; /* Darker grey header */
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+        }
+
+        h1 {
+            color: #ff5722; /* Orange */
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .profile-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ff5722; /* Orange */
+            color: #ffffff; /* White text */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .profile-name {
+            margin-right: 10px;
+            font-size: 1rem;
+            color: #ffffff; /* White text */
+        }
+
+        .button {
+            text-decoration: none;
+            color: #ffffff; /* White text */
+            background: #ff5722; /* Orange */
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .button:hover {
+            background: #e64a19; /* Darker orange on hover */
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+            background: #1a1a1a; /* Darker grey */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border-radius: 15px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            color: #ff5722; /* Orange */
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ff5722; /* Orange underline */
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background-color: #ff5722; /* Orange */
+            color: #ffffff; /* White text */
+        }
+
+        tr:nth-child(even) {
+            background-color: #1a1a1a; /* Darker grey */
+        }
+
+        tr:hover {
+            background-color: #333; /* Slightly lighter grey for hover effect */
+        }
+
+        a.HyperTV {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff5722; /* Orange */
+            color: #ffffff; /* White text */
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        a.HyperTV:hover {
+            background-color: #e64a19; /* Darker orange on hover */
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            table {
+                font-size: 14px;
+            }
+            a.HyperTV {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="profile-menu">
+                <div class="profile-icon">J</div>
+                <span class="profile-name">Jakubek382</span>
+                <a href="profile.html" class="button">Zobacz Profil</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <h2>Użytkownicy sieci</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Typ</th>
+                        <th>Data założenia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jakubek382</td>
+                        <td>Właściciel</td>
+                        <td>04.08.2024</td>
+                    </tr>
+                    <tr>
+                        <td>maciusiek123</td>
+                        <td>Użytkownik</td>
+                        <td>05.08.2024</td>
+                    </tr>
+                    <tr>
+                        <td>Maksio382</td>
+                        <td>Moderator</td>
+                        <td>05.08.2024</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a class="HyperTV" href="index.html">Powrót</a>
+        </div>
+    </main>
+</body>
+</html>

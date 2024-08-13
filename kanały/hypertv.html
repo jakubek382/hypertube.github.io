@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyper TV - LIVE</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background-color: #ff6f00; /* Pomarańczowy kolor dla nagłówka */
+            color: #ffffff;
+            padding: 15px 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .header .viewers {
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        .main-container {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+            gap: 20px;
+            justify-content: center;
+        }
+        .video-container {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        video {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .video-title {
+            font-size: 1.8rem;
+            color: #333333;
+            margin: 20px 0 10px;
+            text-align: center;
+        }
+        .video-info {
+            font-size: 1rem;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .video-description {
+            font-size: 1rem;
+            color: #666666;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .chat-container {
+            flex: 1;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-height: 80vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat h2 {
+            font-size: 1.3rem;
+            color: #333333;
+            margin: 0 0 15px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .message-container {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .message {
+            font-size: 0.9rem;
+            color: #666666;
+            padding: 5px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .message span {
+            font-weight: bold;
+            color: #333333;
+        }
+        .no-connection {
+            text-align: center;
+            color: #ff0000;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hyper TV </h1>
+        <div id="viewers" class="viewers">Liczba oglądających: <strong>0</strong></div>
+    </div>
+    <div class="main-container">
+        <div class="video-container">
+            <vieo id="live-video" controls controlsList="nodownload noplaybackrate">
+                <source src="filmy/film.mp4" type="video/mp4">
+                <source src="filmy/filmnews.webm" type="video/webm">
+                Transmisja jest obecnie niedostępna.
+            </video>
+            <div class="video-title">Hyper TV - Transmisja na żywo!</div>
+            <div class="video-info">
+                Rozpoczęcie transmisji: <strong id="start-time">1 sierpnia 2024, 15:20</strong>
+            </div>
+            <div class="video-description">
+                Opis transmisji: brak
+            </div>
+        </div>
+        <div id="chat-container" class="chat-container">
+            <h2>Czat na żywo:</h2>
+            <div id="chat-messages" class="message-container"></div>
+            <div id="no-connection" class="no-connection">Transmisja zakończona. Dziękujemy za oglądanie!</div>
+        </div>
+    </div>
+    <script>
+        const names = ['NewsFan123', 'ReporterAnna', 'BreakingNewsTom', 'JournalistMike', 'UpdateLisa', 'HeadlinesJohn'];
+        const newsMessages = [
+            "Właśnie przestawiliśmy nowe wiadomości! Co sądzicie o najnowszych wydarzeniach?",
+            "Jakie są Wasze opinie na temat dzisiejszego raportu?",
+            "Gdzie oglądacie dzisiejsze wiadomości?",
+            "Jakie są Wasze prognozy na nadchodzące wydarzenia?",
+            "Oglądajcie transmisję na żywo, aby być na bieżąco z najnowszymi informacjami!",
+            "Czy ktoś już widział wyniki ostatnich badań?",
+            "Jakie są najnowsze doniesienia w Waszym regionie?",
+            "Komentujcie na żywo z nami!"
+        ];
+
+        function getRandomViewers() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            let viewers;
+
+            if (hours === 21 && minutes >= 0 && minutes < 30) {
+                viewers = Math.floor(Math.random() * (1000 - 800 + 1)) + 800; // 800 to 1000
+            } else if (hours === 21 && minutes >= 30) {
+                viewers = Math.floor(Math.random() * (200 - 150 + 1)) + 150; // 150 to 200
+            } else if (hours >= 8 && hours < 9) {
+                viewers = Math.floor(Math.random() * (7000 - 5000 + 1)) + 5000; // 5k to 7k
+            } else {
+                viewers = Math.floor(Math.random() * (20000 - 5000 + 1)) + 5000; // 5k to 20k
+            }
+
+            return viewers;
+        }
+
+        function updateViewers() {
+            const viewers = getRandomViewers();
+            document.querySelector('#viewers strong').textContent = viewers;
+
+            const chatMessages = document.getElementById('chat-messages');
+            const noConnectionMessage = document.getElementById('no-connection');
+
+            // Check if the stream is offline
+            if (viewers <= 0) {
+                chatMessages.innerHTML = '';
+                noConnectionMessage.style.display = 'block';
+                clearInterval(chatInterval);
+                setTimeout(() => {
+                    noConnectionMessage.style.display = 'none';
+                }, 10000); // Keep offline message for 10 seconds
+            } else {
+                noConnectionMessage.style.display = 'none';
+
+                if (viewers >= 10000) {
+                    const delay = Math.max(0.15, 5000 / viewers); // Dynamic delay based on viewers
+                    clearInterval(chatInterval);
+                    chatInterval = setInterval(addRandomNewsMessage, delay);
+                } else {
+                    clearInterval(chatInterval);
+                }
+            }
+        }
+
+        function getRandomUsername() {
+            return names[Math.floor(Math.random() * names.length)];
+        }
+
+        function addRandomNewsMessage() {
+            const chatContainer = document.getElementById('chat-messages');
+            const randomMessage = newsMessages[Math.floor(Math.random() * newsMessages.length)];
+            const randomUser = getRandomUsername();
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message';
+            messageElement.innerHTML = `<span>${randomUser}:</span> ${randomMessage}`;
+            chatContainer.appendChild(messageElement);
+
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        let chatInterval;
+        setInterval(updateViewers, 5000); // Update viewers every 5 seconds
+        updateViewers(); // Initial call to set up viewers and chat
+    </script>
+</body>
+</html>

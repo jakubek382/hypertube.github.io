@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyper TV - Changelog</title>
+    <style>
+        /* General Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #1e1e1e;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #ff5722;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #ff5722;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            color: #b0b0b0;
+            font-size: 1.2rem;
+        }
+
+        main {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .search {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search input {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #ff5722;
+            border-radius: 5px;
+            background: #1e1e1e;
+            color: #ffffff;
+        }
+
+        .version {
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .version:hover {
+            background-color: #333;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .version h2 {
+            margin-top: 0;
+            color: #ff5722;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #ff5722;
+            padding-bottom: 10px;
+        }
+
+        .version ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0;
+            color: #e0e0e0;
+        }
+
+        .version ul li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            background: #1e1e1e;
+            padding: 15px;
+            text-align: center;
+            border-top: 2px solid #ff5722;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            color: #b0b0b0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Changelog</h1>
+        <p>Historia zmian w projekcie</p>
+    </header>
+    
+    <main>
+        <section class="search">
+            <input type="text" id="searchInput" placeholder="Szukaj zmian..." onkeyup="filterVersions()">
+        </section>
+        
+        <section class="version" id="version-0-88">
+            <h2>v0.88 - Rozpoczęcie strony</h2>
+            <ul>
+                <li>Uruchomienie podstawowej wersji strony.</li>
+            </ul>
+        </section>
+        
+        <section class="version" id="version-0-89">
+            <h2>v0.89 - Dodano strony Hyper TV, Hyper TV News, Hyper TV Sport</h2>
+            <ul>
+                <li>Dodano stronę Hyper TV.</li>
+                <li>Dodano stronę Hyper TV News.</li>
+                <li>Dodano stronę Hyper TV Sport.</li>
+            </ul>
+        </section>
+        
+        <section class="version" id="version-0-9">
+            <h2>v0.9 - Błąd strony Hyper TV News (Próba naprawy)</h2>
+            <ul>
+                <li>Rozpoczęto próbę naprawy błędu na stronie Hyper TV News.</li>
+            </ul>
+        </section>
+        
+        <section class="version" id="version-0-91">
+            <h2>v0.91 - Dodano czat na żywo do kanału Hyper TV</h2>
+            <ul>
+                <li>Implementacja funkcji czatu na żywo dla kanału Hyper TV.</li>
+            </ul>
+        </section>
+        
+        <section class="version" id="version-0-92">
+            <h2>v0.92 - Dodano przycisk "Użytkownicy sieci" oraz strona i tabele użytkowników</h2>
+            <ul>
+                <li>Dodano przycisk "Użytkownicy sieci".</li>
+                <li>Stworzono stronę i tabelę użytkowników.</li>
+            </ul>
+        </section>
+        
+        <section class="version" id="version-0-93">
+            <h2>v0.93 - Dodano custom screen error 404 not found</h2>
+            <ul>
+                <li>Dodano niestandardowy ekran błędu 404.</li>
+            </ul>
+        </section>
+        
+        <section class="version" id="version-0-94">
+            <h2>v0.94 - Naprawiono stronę Hyper TV News</h2>
+            <ul>
+                <li>Poprawiono błędy na stronie Hyper TV News.</li>
+            </ul>
+        </section>
+
+        <section class="version" id="version-0-95">
+            <h2>v0.95 - Odpalenie Hyper TV Sport</h2>
+            <ul>
+                <li>Start kanału Hyper TV Sport oraz włączenie serwerów.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 HyperTech. Wszelkie prawa zastrzeżone.</p>
+    </footer>
+    
+    <script>
+        function filterVersions() {
+            var input = document.getElementById('searchInput');
+            var filter = input.value.toLowerCase();
+            var sections = document.getElementsByClassName('version');
+            
+            for (var i = 0; i < sections.length; i++) {
+                var title = sections[i].getElementsByTagName('h2')[0];
+                if (title.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    sections[i].style.display = '';
+                } else {
+                    sections[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

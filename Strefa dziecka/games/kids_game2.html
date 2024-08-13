@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra Puzzle z Tekstem</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e8f5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .puzzle-container {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 2px solid #388e3c;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .puzzle-piece {
+            background-color: #c8e6c9;
+            color: #388e3c;
+            font-weight: bold;
+            text-align: center;
+            line-height: 100px;
+            border: 2px solid #2c6c41;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .puzzle-piece:hover {
+            background-color: #a5d6a7;
+        }
+        .puzzle-piece.correct {
+            background-color: #81c784;
+            color: #ffffff;
+        }
+        #gameOver {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: #ffffff;
+            padding: 20px;
+            border: 2px solid #388e3c;
+            border-radius: 10px;
+            display: none;
+        }
+        #gameOver.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div class="puzzle-container" id="puzzleContainer">
+            <!-- Puzzle pieces will be dynamically added here -->
+        </div>
+        <div id="gameOver" class="hidden">
+            <h1>Gratulacje!</h1>
+            <p>Ułożyłeś poprawne zdanie!</p>
+            <button onclick="restartGame()">Zagraj ponownie</button>
+        </div>
+    </div>
+
+    <script>
+        const puzzleContainer = document.getElementById('puzzleContainer');
+        const gameOver = document.getElementById('gameOver');
+        const pieces = [];
+        const correctOrder = ["Jest", "to", "przykładowe", "zdanie"];
+        const shuffledOrder = [...correctOrder].sort(() => Math.random() - 0.5);
+
+        function createPuzzlePiece(text, index) {
+            const piece = document.createElement('div');
+            piece.className = 'puzzle-piece';
+            piece.textContent = text;
+            piece.dataset.index = index;
+
+            piece.addEventListener('click', () => movePiece(piece));
+            puzzleContainer.appendChild(piece);
+            pieces.push(piece);
+        }
+
+        function movePiece(piece) {
+            const index = parseInt(piece.dataset.index);
+
+            if (index === pieces.length - 1) {
+                piece.classList.add('correct');
+                checkWin();
+            } else {
+                piece.classList.remove('correct');
+                piece.style.order = index;
+            }
+        }
+
+        function checkWin() {
+            if (pieces.every((piece, index) => piece.classList.contains('correct') && parseInt(piece.dataset.index) === index)) {
+                gameOver.classList.remove('hidden');
+            }
+        }
+
+        function initPuzzle() {
+            pieces.length = 0;
+            puzzleContainer.innerHTML = '';
+
+            shuffledOrder.forEach((text, index) => createPuzzlePiece(text, index));
+        }
+
+        function restartGame() {
+            gameOver.classList.add('hidden');
+            initPuzzle();
+        }
+
+        initPuzzle();
+    </script>
+</body>
+</html>
